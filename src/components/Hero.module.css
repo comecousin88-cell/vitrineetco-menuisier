@@ -1,0 +1,304 @@
+/* Le hero, comme une feuille d'atelier : le texte à gauche sur le plâtre, l'image posée à la règle à droite.
+   Sans animation (ou sans JavaScript), c'est l'état final : le buffet fini et sa cote. Avec animation
+   (html[data-anim]), la séquence avance au scroll et les cotes se tracent sur l'image. */
+
+.hero {
+  position: relative;
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(1.5rem, 3.5vw, 3.5rem);
+  height: 100svh;
+  min-height: 38rem;
+  padding: calc(var(--top-h) + clamp(1.5rem, 5vh, 3.5rem)) var(--gutter) clamp(1.5rem, 5vh, 3rem);
+}
+
+/* ---------- Le texte ---------- */
+
+.text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  min-width: 0;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+}
+
+.name {
+  font-size: clamp(3.25rem, 6.4vw, 6.5rem);
+  font-weight: 650;
+  font-variation-settings: "wdth" 62;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  word-spacing: 0.08em; /* en largeur étroite, les espaces se tassent : on les rouvre un peu */
+  max-width: 7ch;
+}
+
+.role {
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  font-weight: 500;
+  font-variation-settings: "wdth" 100;
+  line-height: 1.25;
+  letter-spacing: 0;
+  color: var(--graphite-fonce);
+}
+
+.lead {
+  max-width: 30ch;
+  margin-top: 1.75rem;
+  font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+/* La zone d'intervention entre deux demi-traits de cote, chacun fermé par sa ligne d'attache. */
+.zone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  font-variation-settings: "wdth" var(--mi-etroit);
+}
+
+.zoneTrait {
+  position: relative;
+  flex: 0 0 2.25rem;
+  height: 1px;
+  background: var(--noir);
+}
+
+.zoneTrait::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  width: 1px;
+  height: 13px;
+  background: var(--noir);
+}
+
+.zoneTrait:first-child::before {
+  left: 0;
+}
+
+.zoneTrait:last-child::before {
+  right: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.phone {
+  font-size: 0.9375rem;
+  color: var(--graphite-fonce);
+  text-decoration: none;
+}
+
+.phone span {
+  font-weight: 600;
+  color: var(--noir);
+}
+
+.phone:hover span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- L'image ---------- */
+
+.media {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--chene-pale);
+}
+
+.poster {
+  position: absolute;
+  inset: 0;
+}
+
+:global(html[data-anim]) .poster {
+  visibility: hidden;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+/* Le canvas est noir tant qu'aucune image n'est arrivée : on attend la première. */
+.canvas[data-painted] {
+  opacity: 1;
+}
+
+/* L'emplacement provisoire, en attendant la vidéo : un aplat de chêne clair, le plan attendu, et une règle
+   qui suit le défilement. Rien n'y est dessiné. */
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  background: linear-gradient(100deg, #E8DCC6 0%, var(--chene-pale) 45%, #CDB791 100%);
+  color: var(--graphite-fonce);
+  font-size: 0.8125rem;
+}
+
+:global(html:not([data-anim])) .placeholder {
+  display: none;
+}
+
+.placeholderBar {
+  order: -1;
+  height: 1px;
+  background: linear-gradient(var(--noir), var(--noir)) 0 0 / calc(var(--p, 0) * 100%) 100% no-repeat, var(--filet);
+}
+
+/* ---------- Les cotes ---------- */
+
+.cotes {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.halo,
+.trait {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.halo {
+  stroke: var(--platre);
+  stroke-width: 4;
+  stroke-opacity: 0.7;
+}
+
+.trait {
+  stroke: var(--noir);
+  stroke-width: 1.25;
+}
+
+.valeur {
+  fill: var(--noir);
+  paint-order: stroke;
+  stroke: rgba(var(--platre-rgb), 0.8);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.chiffre {
+  font-size: 16px;
+  font-weight: 700;
+  font-variation-settings: "wdth" var(--mi-etroit);
+  font-variant-numeric: tabular-nums;
+}
+
+.note {
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+/* Avec animation : les cotes attendent leur tour, tous traits effacés. */
+:global(html[data-anim]) .cote,
+:global(html[data-anim]) .coteFinale {
+  visibility: hidden;
+  opacity: 0;
+}
+
+:global(html[data-anim]) .cotes path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+/* Sans animation : seule la cote du buffet fini, déjà tracée. */
+:global(html:not([data-anim])) .cote {
+  display: none;
+}
+
+/* ---------- Écrans moyens : le texte prend un peu plus de place ---------- */
+
+@media (min-width: 760px) and (max-width: 1100px) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  }
+}
+
+/* ---------- Téléphone ---------- */
+
+@media (max-width: 759px) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 1.25rem;
+    min-height: 34rem;
+    padding: calc(var(--top-h) + 1.25rem) var(--gutter) calc(var(--bar-h) + env(safe-area-inset-bottom, 0px) + 1rem);
+  }
+
+  .text {
+    gap: 1rem;
+  }
+
+  .title {
+    gap: 0.5rem;
+  }
+
+  .name {
+    font-size: clamp(2.5rem, 12vw, 3.5rem);
+    max-width: none;
+  }
+
+  .role {
+    font-size: 1rem;
+  }
+
+  .lead {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  /* Devis et Appeler sont déjà dans la barre du bas : la place revient à l'image. */
+  .actions {
+    display: none;
+  }
+
+  /* Sans animation : tout se suit simplement, le buffet fini sous le texte. */
+  :global(html:not([data-anim])) .stage {
+    height: auto;
+    min-height: 0;
+  }
+
+  :global(html:not([data-anim])) .media {
+    aspect-ratio: 4 / 5;
+  }
+}

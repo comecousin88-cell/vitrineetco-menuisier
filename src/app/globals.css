@@ -1,0 +1,108 @@
+/* Les couleurs du site, réunies ici pour pouvoir les changer en un seul endroit. Direction « Cote et trait ». */
+:root {
+  --platre: #EDEDE7; /* le fond : un blanc de mur d'atelier, neutre et légèrement gris */
+  --platre-rgb: 237, 237, 231;
+  --papier: #F8F8F5; /* les champs et les panneaux posés sur le fond */
+  --chene: #D9C4A1; /* le bois clair : filtres actifs, curseur avant/après */
+  --chene-pale: #E4D5BA;
+  --noir: #1E1E1C; /* le noir mat : le texte, les barres */
+  --sapin: #1F4A3A; /* un seul usage : « Demander un devis » et l'étape en cours. Texte clair à 9,9:1 */
+  --sapin-fonce: #163729;
+  --graphite: #7D7D76; /* les traits de cote et les filets */
+  --graphite-fonce: #55554F; /* le texte secondaire, lisible en petit (6,6:1 sur le plâtre) */
+  --erreur: #A3392C;
+  --filet: rgba(30, 30, 28, 0.14);
+
+  --font-size: 1.0625rem; /* 17 px */
+
+  /* Le bandeau et la barre du haut : les sections s'en servent pour ne jamais passer dessous. */
+  --band-h: 1.75rem;
+  --header-h: 4rem;
+  --top-h: calc(var(--band-h) + var(--header-h));
+  /* La barre du bas, sur téléphone. */
+  --bar-h: 4.5rem;
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+
+  /* Archivo, en largeur variable : étroite pour les titres, normale pour le texte. */
+  --etroit: 66;
+  --mi-etroit: 82;
+}
+
+@media (max-width: 759px) {
+  :root {
+    --header-h: 3.25rem;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-padding-top: var(--top-h);
+}
+
+body {
+  background: var(--platre);
+  color: var(--noir);
+  font-family: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--font-size);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+@media (max-width: 759px) {
+  body {
+    /* La barre du bas ne cache jamais la fin de la page. */
+    padding-bottom: calc(var(--bar-h) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  font-variation-settings: "wdth" var(--etroit);
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 2px solid var(--noir);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Les chiffres des cotes, des prix et des horaires restent alignés en colonne. */
+.chiffres {
+  font-variant-numeric: tabular-nums;
+}

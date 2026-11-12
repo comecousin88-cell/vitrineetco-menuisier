@@ -1,0 +1,113 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+}
+
+.band {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--band-h);
+  padding: 0 var(--gutter);
+  background: var(--noir);
+  color: var(--platre);
+  font-size: 0.8125rem;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  height: var(--header-h);
+  padding: 0 var(--gutter);
+  background: rgba(var(--platre-rgb), 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--filet);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  font-variation-settings: "wdth" var(--etroit);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.mark {
+  width: 1.125rem;
+  height: auto;
+  color: var(--sapin);
+}
+
+.nav {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.nav a {
+  font-size: 0.9375rem;
+  text-decoration: none;
+  color: var(--graphite-fonce);
+  transition: color 0.2s;
+}
+
+.nav a:hover {
+  color: var(--noir);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.phone {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.phone:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cta {
+  min-height: 2.5rem;
+}
+
+/* Les ancres disparaissent avant de se tasser : le téléphone et le devis passent en premier. */
+@media (max-width: 1140px) {
+  .nav {
+    display: none;
+  }
+
+  .bar {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+}
+
+/* Sur téléphone : le nom seul. Devis et Appeler sont dans la barre du bas. */
+@media (max-width: 759px) {
+  .band {
+    font-size: 0.75rem;
+  }
+
+  .actions {
+    display: none;
+  }
+
+  .brand {
+    font-size: 1.125rem;
+  }
+}
