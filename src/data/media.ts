@@ -1,4 +1,5 @@
 import photos from "./photos.json";
+import sequences from "./sequences.json";
 
 export const PHOTO_QUALITY = 82;
 
@@ -7,8 +8,8 @@ export const PHOTO_QUALITY = 82;
 export const PHOTOS: Record<string, { width: number; height: number }> = photos;
 export const isReady = (src: string) => src in PHOTOS;
 
-// Une séquence d'images que le scroll fait avancer. count reste à 0 tant que les images ne sont pas
-// préparées : le site montre alors un emplacement provisoire qui dit quelle vidéo fournir.
+// Une séquence d'images que le scroll fait avancer. Les nombres d'images viennent de sequences.json, écrit par
+// scripts/prepare_media.py ; à 0, le site montre un emplacement provisoire qui dit quelle vidéo fournir.
 export type Sequence = {
   folder: string;
   count: number;
@@ -22,8 +23,7 @@ export type Sequence = {
 
 export const HERO_SEQUENCE: Sequence = {
   folder: "/hero",
-  count: 0,
-  mobileCount: 0,
+  ...sequences.hero,
   ratio: 16 / 9,
   plans: [
     { file: "hero-1-rabot.mp4", share: 1 / 3 },
@@ -37,8 +37,7 @@ export const HERO_SEQUENCE: Sequence = {
 // de la section, pour ne pas concurrencer le hero.
 export const ATELIER_SEQUENCE: Sequence = {
   folder: "/atelier",
-  count: 0,
-  mobileCount: 0,
+  ...sequences.atelier,
   ratio: 16 / 9,
   plans: [
     { file: "atelier-1-entree.mp4", share: 0.55 },

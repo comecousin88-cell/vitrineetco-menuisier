@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { motion } from "motion/react";
+import Photo from "@/components/Photo";
 import Triangle from "@/components/Triangle";
 import { ATELIER, telHref } from "@/data/atelier";
 import { TYPES_PROJET } from "@/data/prix";
@@ -206,6 +207,14 @@ export default function Devis() {
             transition={{ duration: 0.45, ease: EASE }}
             role="status"
           >
+            <Photo
+              src="/devis/copeaux.webp"
+              file="copeaux.jpg"
+              alt=""
+              ratio="16 / 9"
+              sizes="(min-width: 760px) 50vw, 100vw"
+              className={styles.confirmationPhoto}
+            />
             <h3 ref={titreConfirmation} tabIndex={-1} className={styles.confirmationTitre}>
               Demande envoyée
             </h3>

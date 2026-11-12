@@ -429,6 +429,11 @@
   gap: 1.25rem;
 }
 
+.confirmationPhoto {
+  width: 100%;
+  border-radius: 2px;
+}
+
 .confirmationTitre {
   font-size: clamp(2rem, 3.6vw, 3rem);
   color: var(--sapin);

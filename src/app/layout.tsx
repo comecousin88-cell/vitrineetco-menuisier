@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import type { Metadata, Viewport } from "next";
 import { Archivo } from "next/font/google";
 import MotionRoot from "@/components/MotionRoot";
@@ -8,6 +10,9 @@ import "./globals.css";
 
 // Une seule famille, Archivo, avec son axe de largeur : étroite pour les titres, normale pour le texte.
 const archivo = Archivo({ subsets: ["latin", "latin-ext"], axes: ["wdth"], variable: "--font-archivo" });
+
+// L'image de partage n'est annoncée que si le script de préparation l'a produite.
+const partage = existsSync(path.join(process.cwd(), "public", "partage.jpg"));
 
 const description = `${ATELIER.metier} à ${ATELIER.city} : cuisines, escaliers, dressings, bibliothèques et portes sur mesure, fabriqués à l'atelier en chêne local. Tours et ${ATELIER.zone.radiusKm} km autour. Projet concept.`;
 
@@ -25,6 +30,7 @@ export const metadata: Metadata = {
     siteName: ATELIER.name,
     title: `${ATELIER.name}, ${ATELIER.metier.toLowerCase()} à ${ATELIER.city}`,
     description,
+    ...(partage && { images: [{ url: "/partage.jpg", width: 1200, height: 630, alt: "Un buffet en chêne huilé dans un salon lumineux." }] }),
   },
 };
 

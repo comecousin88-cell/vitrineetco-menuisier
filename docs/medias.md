@@ -8,6 +8,17 @@ vidéos en images et de l'export WebP dans `public/`.
 Outils prévus : images fixes avec Gemini, vidéos avec Higgsfield en mode image vers vidéo (image de début et
 image de fin imposées).
 
+Après chaque dépôt dans `source/`, lancer :
+
+```bash
+python scripts/prepare_media.py
+```
+
+Le script traite tout ce qui est présent, ignore le reste, et le site remplace les emplacements provisoires au
+fur et à mesure. Les images de début, de raccord et de fin des vidéos servent seulement à les générer : le site
+ne les affiche pas, sauf `hero-fin.jpg` et `atelier-fin.jpg`. Une planche de contrôle de chaque séquence est
+écrite dans `source/_controle/`.
+
 ## Règles communes à tout le site
 
 | Sujet | Règle |
