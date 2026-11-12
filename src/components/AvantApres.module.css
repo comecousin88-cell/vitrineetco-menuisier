@@ -1,0 +1,97 @@
+.cadre {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: pan-y; /* le doigt fait glisser le curseur à l'horizontale, la page défile à la verticale */
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+}
+
+/* La photo d'avant, découpée à gauche de la ligne. */
+.avant {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+}
+
+.etiquette {
+  position: absolute;
+  top: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  background: rgba(var(--platre-rgb), 0.9);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.etiquetteAvant {
+  left: 0.875rem;
+}
+
+.etiquetteApres {
+  right: 0.875rem;
+}
+
+.ligne {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  width: 0;
+  border-left: 1.5px solid var(--papier);
+  box-shadow: 0 0 0 0.5px rgba(30, 30, 28, 0.35);
+  pointer-events: none;
+}
+
+/* La poignée : deux triangles de menuisier, pointés vers la gauche et la droite. */
+.poignee {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.625rem;
+  border-radius: 3px;
+  background: var(--papier);
+  color: var(--noir);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 6px 18px -8px rgba(30, 30, 28, 0.5);
+}
+
+.flecheGauche,
+.flecheDroite {
+  width: 0.625rem;
+  height: auto;
+}
+
+.flecheGauche {
+  transform: rotate(-90deg);
+}
+
+.flecheDroite {
+  transform: rotate(90deg);
+}
+
+.curseur {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Le focus clavier se voit sur la poignée, puisque le vrai curseur est invisible. */
+.cadre:has(.curseur:focus-visible) .poignee {
+  outline: 2px solid var(--noir);
+  outline-offset: 2px;
+}

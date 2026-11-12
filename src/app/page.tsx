@@ -1,4 +1,5 @@
 import Confiance from "@/components/Confiance";
+import Galerie from "@/components/Galerie";
 import Hero from "@/components/Hero";
 import JsonLd from "@/components/JsonLd";
 import MobileBar from "@/components/MobileBar";
@@ -12,6 +13,7 @@ export default function Home() {
       <main>
         <Hero />
         <Confiance />
+        <Galerie />
         {/* Les sections suivantes arrivent une par une, après validation. */}
         <div style={{ height: "60vh" }} aria-hidden="true" />
       </main>

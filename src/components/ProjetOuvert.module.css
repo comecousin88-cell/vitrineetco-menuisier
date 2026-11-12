@@ -1,0 +1,218 @@
+.fond {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  background: var(--platre);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ---------- La barre du haut ---------- */
+
+.barre {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4rem;
+  padding: 0 var(--gutter);
+  background: rgba(var(--platre-rgb), 0.94);
+  box-shadow: 0 1px 0 var(--filet);
+}
+
+.compteur {
+  font-size: 0.875rem;
+  color: var(--graphite-fonce);
+}
+
+.navigation {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.bouton {
+  min-height: 2.5rem;
+  padding: 0 0.875rem;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px var(--filet);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.bouton:hover {
+  box-shadow: inset 0 0 0 1px var(--noir);
+}
+
+.fermer {
+  background: var(--noir);
+  color: var(--papier);
+  box-shadow: none;
+}
+
+.fermer:hover {
+  background: #000;
+  box-shadow: none;
+}
+
+/* ---------- Le corps : la photo à gauche, le cartouche à droite ---------- */
+
+.corps {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(19rem, 26rem);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+  padding: clamp(1rem, 3vh, 2rem) var(--gutter) clamp(1.25rem, 4vh, 2.5rem);
+}
+
+.visuel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+  min-width: 0;
+}
+
+/* La photo garde son format 4:5 et tient dans la hauteur de l'écran. */
+.image {
+  position: relative;
+  height: calc(100svh - 4rem - 3.75rem - clamp(2.25rem, 7vh, 4.5rem));
+  max-width: 100%;
+  aspect-ratio: 4 / 5;
+  background: var(--chene-pale);
+  overflow: hidden;
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+}
+
+.vues {
+  display: flex;
+  gap: 0.375rem;
+}
+
+.vue {
+  min-height: 2.25rem;
+  padding: 0 0.75rem;
+  border-radius: 3px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--graphite-fonce);
+}
+
+.vue[aria-pressed="true"] {
+  background: var(--chene);
+  color: var(--noir);
+}
+
+.infos {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.titre {
+  font-size: clamp(2rem, 3.2vw, 3rem);
+}
+
+.phrase {
+  font-size: 1.0625rem;
+  max-width: 34ch;
+}
+
+/* Le cartouche : le petit tableau du coin d'un plan. Un cadre noir, des filets entre les cases. */
+.cartouche {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1.5px solid var(--noir);
+}
+
+.cartouche div {
+  grid-column: 1 / -1;
+  padding: 0.625rem 0.875rem;
+  border-top: 1px solid var(--filet);
+}
+
+.cartouche div:first-child {
+  border-top: 0;
+}
+
+.cartouche .moitie {
+  grid-column: auto;
+}
+
+.cartouche .moitie + .moitie {
+  border-left: 1px solid var(--filet);
+}
+
+.cartouche dt {
+  font-size: 0.8125rem;
+  color: var(--graphite-fonce);
+}
+
+.cartouche dd {
+  font-weight: 600;
+  font-variation-settings: "wdth" var(--mi-etroit);
+}
+
+.cta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0 1.25rem;
+  border-radius: 3px;
+  background: var(--sapin);
+  color: var(--papier);
+  font-weight: 600;
+  font-variation-settings: "wdth" var(--mi-etroit);
+  text-decoration: none;
+}
+
+.cta:hover {
+  background: var(--sapin-fonce);
+}
+
+/* ---------- Téléphone : tout se suit, la page de la vue ouverte défile ---------- */
+
+@media (max-width: 759px) {
+  .barre {
+    min-height: 3.5rem;
+  }
+
+  .compteur {
+    display: none;
+  }
+
+  .navigation {
+    width: 100%;
+  }
+
+  .fermer {
+    margin-left: auto;
+  }
+
+  .corps {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    padding-bottom: 2.5rem;
+  }
+
+  .image {
+    width: 100%;
+    height: auto;
+  }
+
+  .cta {
+    align-self: stretch;
+    justify-content: center;
+    text-align: center;
+  }
+}

@@ -1,0 +1,187 @@
+.galerie {
+  padding: clamp(4rem, 9vw, 8rem) var(--gutter) clamp(4rem, 8vw, 7rem);
+}
+
+.entete {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(1.5rem, 3.5vw, 3.5rem);
+  align-items: end;
+}
+
+.titre {
+  font-size: clamp(2.5rem, 5.4vw, 4.75rem);
+  max-width: 9ch;
+  outline: none;
+}
+
+.intro {
+  max-width: 40ch;
+  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
+}
+
+/* ---------- Les filtres ---------- */
+
+.filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: clamp(2rem, 4vw, 3rem) 0 clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.filtre {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  min-height: 2.75rem;
+  padding: 0 0.875rem;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px var(--filet);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.filtre:hover {
+  box-shadow: inset 0 0 0 1px var(--noir);
+}
+
+/* Le filtre actif : fond chêne clair et le triangle de menuisier, comme une pièce marquée au crayon. */
+.filtre[aria-pressed="true"] {
+  background: var(--chene);
+  box-shadow: none;
+}
+
+.repere {
+  display: none;
+  width: 0.6875rem;
+  height: auto;
+}
+
+.filtre[aria-pressed="true"] .repere {
+  display: block;
+}
+
+.nombre {
+  font-size: 0.8125rem;
+  color: var(--graphite-fonce);
+}
+
+/* ---------- La grille : toutes les photos au même format, toutes les lignes alignées ---------- */
+
+.grille {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 3.5vw, 3rem) clamp(1rem, 2vw, 1.75rem);
+}
+
+.carte {
+  position: relative;
+}
+
+.cadre {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background: var(--chene-pale);
+}
+
+.photo,
+.photoImage {
+  position: absolute;
+  inset: 0;
+}
+
+.badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  background: rgba(var(--platre-rgb), 0.92);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.nom {
+  margin-top: 0.875rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  font-variation-settings: "wdth" var(--mi-etroit);
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+/* Le bouton couvre toute la carte : on peut cliquer sur la photo ou sur le titre. */
+.ouvrir {
+  text-align: left;
+  font-weight: inherit;
+}
+
+.ouvrir::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.ouvrir:focus-visible {
+  outline: none;
+}
+
+.ouvrir:focus-visible::after {
+  outline: 2px solid var(--noir);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.carte:hover .ouvrir {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.ville {
+  font-weight: 500;
+  color: var(--graphite-fonce);
+}
+
+@media (max-width: 999px) {
+  .grille {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 759px) {
+  .entete {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .filtres {
+    /* Les filtres défilent sur une ligne plutôt que d'en occuper trois. */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .filtre {
+    flex: none;
+  }
+
+  .grille {
+    gap: 1.75rem 0.75rem;
+  }
+
+  .nom {
+    font-size: 0.9375rem;
+  }
+
+  .badge {
+    top: 0.5rem;
+    left: 0.5rem;
+    font-size: 0.75rem;
+  }
+}
