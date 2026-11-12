@@ -1,0 +1,123 @@
+.prix {
+  padding: clamp(4rem, 9vw, 8rem) var(--gutter);
+  border-top: 1px solid var(--filet);
+}
+
+.entete {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(1.5rem, 3.5vw, 3.5rem);
+  align-items: end;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.titre {
+  font-size: clamp(2.5rem, 5.4vw, 4.75rem);
+  outline: none;
+}
+
+.intro {
+  max-width: 40ch;
+  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
+}
+
+/* La nomenclature : un cadre noir, des filets entre les lignes, les chiffres à droite en colonne. */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 1.5px solid var(--noir);
+  border-bottom: 1.5px solid var(--noir);
+}
+
+.table thead th {
+  padding: 0.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--graphite-fonce);
+  text-align: left;
+  border-bottom: 1px solid var(--noir);
+}
+
+.table tbody th,
+.table td {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--filet);
+  vertical-align: baseline;
+}
+
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table tbody th {
+  text-align: left;
+  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  font-weight: 600;
+  font-variation-settings: "wdth" var(--mi-etroit);
+}
+
+.table .nombre {
+  text-align: right;
+  padding-left: 1.5rem;
+}
+
+.table td {
+  font-weight: 600;
+  font-variation-settings: "wdth" var(--mi-etroit);
+}
+
+.unite {
+  display: block;
+  margin-top: 0.125rem;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  font-variation-settings: "wdth" 100;
+  color: var(--graphite-fonce);
+}
+
+/* Une valeur à fournir : impossible à prendre pour un vrai prix. */
+.aCompleter {
+  display: inline-block;
+  padding: 0.125rem 0.375rem;
+  border: 1px dashed var(--erreur);
+  border-radius: 2px;
+  color: var(--erreur);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.pied {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.note {
+  max-width: 44ch;
+  font-size: 0.9375rem;
+  color: var(--graphite-fonce);
+}
+
+@media (max-width: 759px) {
+  .entete {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .table tbody th {
+    font-size: 1.0625rem;
+  }
+
+  .table .nombre {
+    padding-left: 0.75rem;
+  }
+
+  .unite {
+    font-size: 0.75rem;
+  }
+}

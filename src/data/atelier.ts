@@ -12,9 +12,10 @@ export const ATELIER = {
   region: "Indre-et-Loire",
   phone: "02 61 91 37 14",
   email: "contact@chene-et-fil.example",
-  // Le cœur de Montlouis-sur-Loire : le cercle de la zone d'intervention part d'ici.
+  // Le point de l'atelier sur la carte, au cœur de Montlouis-sur-Loire.
   geo: { lat: 47.3886, lng: 0.8275 },
-  zone: { center: "Tours", radiusKm: 40 },
+  // La zone d'intervention : un cercle de 40 km autour de Tours.
+  zone: { center: "Tours", radiusKm: 40, lat: 47.3941, lng: 0.6848 },
   foundedYear: 2004,
   // Les horaires de l'atelier, au format des données structurées (jours en anglais, heures sur 24 h).
   hours: [

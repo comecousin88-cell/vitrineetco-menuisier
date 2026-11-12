@@ -26,7 +26,7 @@ export default function JsonLd() {
     areaServed: [
       {
         "@type": "GeoCircle",
-        geoMidpoint: { "@type": "GeoCoordinates", latitude: ATELIER.geo.lat, longitude: ATELIER.geo.lng },
+        geoMidpoint: { "@type": "GeoCoordinates", latitude: ATELIER.zone.lat, longitude: ATELIER.zone.lng },
         geoRadius: ATELIER.zone.radiusKm * 1000,
       },
       ...ATELIER.villes.map((ville) => ({ "@type": "City", name: ville })),

@@ -13,8 +13,7 @@
   object-fit: cover;
 }
 
-/* L'emplacement provisoire : un aplat de chêne clair éclairé de la gauche, et le nom du fichier attendu.
-   Rien n'y est dessiné. */
+/* L'emplacement provisoire : un fond uni et le nom du fichier attendu. Rien n'y est dessiné. */
 .placeholder {
   position: absolute;
   inset: 0;
@@ -23,7 +22,7 @@
   padding: 0.75rem;
   color: var(--graphite-fonce);
   font-size: 0.75rem;
-  background: linear-gradient(100deg, #e6d8bf 0%, var(--chene-pale) 45%, #cdb791 100%);
+  background: var(--chene-pale);
 }
 
 .placeholder span {

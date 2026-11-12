@@ -1,0 +1,118 @@
+.contact {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(1.5rem, 3.5vw, 3.5rem);
+  padding: clamp(4rem, 9vw, 8rem) var(--gutter);
+  border-top: 1px solid var(--filet);
+}
+
+.infos {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.titre {
+  font-size: clamp(2.5rem, 5.4vw, 4.75rem);
+  outline: none;
+}
+
+.moi {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: end;
+}
+
+.portrait {
+  border-radius: 2px;
+}
+
+.phrase {
+  max-width: 28ch;
+}
+
+.telephone {
+  display: inline-block;
+  margin-top: 0.625rem;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 650;
+  font-variation-settings: "wdth" var(--etroit);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.telephone:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* Le cartouche du contact, comme celui des projets. */
+.fiche {
+  border: 1.5px solid var(--noir);
+}
+
+.fiche div {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.875rem 1rem;
+  border-top: 1px solid var(--filet);
+}
+
+.fiche div:first-child {
+  border-top: 0;
+}
+
+.fiche dt {
+  font-size: 0.875rem;
+  color: var(--graphite-fonce);
+}
+
+.fiche dd {
+  font-weight: 600;
+  font-variation-settings: "wdth" var(--mi-etroit);
+  line-height: 1.45;
+}
+
+.fiche address {
+  font-style: normal;
+}
+
+.lien {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 0.9375rem;
+  text-underline-offset: 3px;
+}
+
+.cote {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.carte {
+  flex: 1;
+  min-height: 26rem;
+}
+
+@media (max-width: 759px) {
+  .contact {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .moi {
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+  }
+
+  .fiche div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
+  }
+
+  .carte {
+    min-height: 22rem;
+  }
+}

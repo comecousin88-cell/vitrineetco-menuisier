@@ -35,7 +35,7 @@ export default function Galerie() {
     setOuvert(null);
     lockScroll(false);
     // Le focus revient sur la vignette du dernier projet vu.
-    if (slug) requestAnimationFrame(() => boutons.current.get(slug)?.focus({ preventScroll: true }));
+    if (slug) setTimeout(() => boutons.current.get(slug)?.focus({ preventScroll: true }), 0);
   };
 
   return (

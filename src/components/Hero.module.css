@@ -155,8 +155,8 @@
   opacity: 1;
 }
 
-/* L'emplacement provisoire, en attendant la vidéo : un aplat de chêne clair, le plan attendu, et une règle
-   qui suit le défilement. Rien n'y est dessiné. */
+/* L'emplacement provisoire, en attendant la vidéo : un fond uni, le fichier attendu pour le plan à l'écran,
+   et un trait qui suit le défilement. Rien n'y est dessiné. */
 .placeholder {
   position: absolute;
   inset: 0;
@@ -165,7 +165,7 @@
   justify-content: flex-start;
   gap: 0.75rem;
   padding: 1.25rem;
-  background: linear-gradient(100deg, #E8DCC6 0%, var(--chene-pale) 45%, #CDB791 100%);
+  background: var(--chene-pale);
   color: var(--graphite-fonce);
   font-size: 0.8125rem;
 }

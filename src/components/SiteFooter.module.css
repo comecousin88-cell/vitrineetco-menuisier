@@ -1,0 +1,70 @@
+.pied {
+  padding: clamp(3rem, 6vw, 4.5rem) var(--gutter) 2rem;
+  background: var(--noir);
+  color: var(--platre);
+}
+
+.grille {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr);
+  gap: 2rem clamp(1.5rem, 3.5vw, 3.5rem);
+}
+
+.marque {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 650;
+  font-variation-settings: "wdth" var(--etroit);
+}
+
+.triangle {
+  width: 1.125rem;
+  height: auto;
+  color: var(--chene);
+}
+
+.texte {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  color: rgba(237, 237, 231, 0.8);
+}
+
+.texte address {
+  font-style: normal;
+}
+
+.texte a {
+  font-weight: 600;
+  color: var(--platre);
+  text-decoration: none;
+}
+
+.liens {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+}
+
+.liens a {
+  text-underline-offset: 3px;
+}
+
+.concept {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(237, 237, 231, 0.18);
+  font-size: 0.8125rem;
+  color: rgba(237, 237, 231, 0.7);
+}
+
+@media (max-width: 759px) {
+  .grille {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

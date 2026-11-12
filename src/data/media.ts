@@ -26,9 +26,9 @@ export const HERO_SEQUENCE: Sequence = {
   mobileCount: 0,
   ratio: 16 / 9,
   plans: [
-    { file: "hero-1-rabot.mp4", share: 0.34 },
-    { file: "hero-2-aronde.mp4", share: 0.26 },
-    { file: "hero-3-buffet.mp4", share: 0.4 },
+    { file: "hero-1-rabot.mp4", share: 1 / 3 },
+    { file: "hero-2-aronde.mp4", share: 1 / 3 },
+    { file: "hero-3-buffet.mp4", share: 1 / 3 },
   ],
   poster: { src: "/hero/fin.webp", file: "hero-fin.jpg" },
 };

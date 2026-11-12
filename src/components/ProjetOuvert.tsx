@@ -5,7 +5,9 @@ import { motion } from "motion/react";
 import AvantApres from "@/components/AvantApres";
 import Photo from "@/components/Photo";
 import { ATELIER } from "@/data/atelier";
+import { TYPE_PAR_CATEGORIE } from "@/data/prix";
 import { projetAvant, projetDetail, projetPhoto, type Projet } from "@/data/projets";
+import { preremplirDevis } from "@/lib/devis";
 import styles from "./ProjetOuvert.module.css";
 
 type Vue = "ensemble" | "detail" | "avant";
@@ -191,7 +193,15 @@ export default function ProjetOuvert({
             </div>
           </dl>
 
-          <a href="#devis" className={styles.cta} onClick={onClose}>
+          <a
+            href="#devis"
+            className={styles.cta}
+            onClick={() => {
+              // Le formulaire s'ouvre avec le type de ce projet déjà coché.
+              preremplirDevis(projet.slug.startsWith("portes-") ? "placard" : TYPE_PAR_CATEGORIE[projet.categorie]);
+              onClose();
+            }}
+          >
             Demander un devis pour un projet de ce type
           </a>
         </motion.div>

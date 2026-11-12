@@ -47,7 +47,7 @@
   opacity: 1;
 }
 
-/* L'emplacement provisoire : un aplat de bois foncé, le plan attendu. Rien n'y est dessiné. */
+/* L'emplacement provisoire : un fond uni, le fichier attendu pour le plan à l'écran. Rien n'y est dessiné. */
 .placeholder {
   position: absolute;
   inset: 0;
@@ -55,7 +55,7 @@
   align-items: flex-start;
   justify-content: flex-end;
   padding: calc(var(--top-h) + 1.25rem) var(--gutter);
-  background: linear-gradient(100deg, #C9B38D 0%, #A88F68 50%, #7E6A4C 100%);
+  background: #7A7268;
   color: rgba(248, 248, 245, 0.85);
   font-size: 0.8125rem;
 }

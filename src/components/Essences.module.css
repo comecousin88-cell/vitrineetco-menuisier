@@ -1,0 +1,107 @@
+.essences {
+  padding: clamp(4rem, 9vw, 8rem) var(--gutter);
+}
+
+.entete {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(1.5rem, 3.5vw, 3.5rem);
+  align-items: end;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.titre {
+  font-size: clamp(2.5rem, 5.4vw, 4.75rem);
+  max-width: 8ch;
+}
+
+.intro {
+  max-width: 40ch;
+  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
+}
+
+/* Chaque essence : une grande bande de texture (7 colonnes), le texte à droite (5 colonnes). Les bandes se
+   touchent presque, comme des planches posées côte à côte. */
+.liste {
+  list-style: none;
+  display: grid;
+  gap: 0.375rem;
+}
+
+.essence {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(1.5rem, 3.5vw, 3.5rem);
+  align-items: center;
+}
+
+.texture {
+  aspect-ratio: 21 / 9;
+}
+
+/* La couche qui porte l'image dépasse un peu du cadre : la parallaxe ne laisse jamais voir le fond. */
+.texture .couche {
+  inset: -9% 0;
+}
+
+.texte {
+  padding: 1.5rem 0;
+}
+
+.nom {
+  font-size: clamp(2rem, 3.4vw, 3.25rem);
+}
+
+.phrase {
+  max-width: 32ch;
+  margin-top: 0.625rem;
+}
+
+.fiche {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 1.25rem;
+  row-gap: 0.25rem;
+  margin-top: 1.125rem;
+  font-size: 0.9375rem;
+}
+
+.fiche div {
+  display: contents;
+}
+
+.fiche dt {
+  color: var(--graphite-fonce);
+}
+
+.fiche dd {
+  font-weight: 600;
+  font-variation-settings: "wdth" var(--mi-etroit);
+}
+
+@media (max-width: 759px) {
+  .entete,
+  .essence {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .entete {
+    gap: 1rem;
+  }
+
+  .liste {
+    gap: 2.25rem;
+  }
+
+  .essence {
+    gap: 1rem;
+  }
+
+  .texture {
+    aspect-ratio: 16 / 9;
+  }
+
+  .texte {
+    padding: 0;
+  }
+}

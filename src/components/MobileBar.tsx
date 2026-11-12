@@ -7,7 +7,7 @@ import styles from "./MobileBar.module.css";
 
 // À portée de pouce sur téléphone : demander un devis, appeler. Elle ne s'efface que lorsque le clavier
 // est ouvert sur un champ, pour ne pas le recouvrir.
-export default function MobileBar() {
+export default function MobileBar({ base = "" }: { base?: string }) {
   const [typing, setTyping] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function MobileBar() {
       transition={{ duration: 0.25, ease: "easeOut" }}
       inert={typing}
     >
-      <a href="#devis" className={`${styles.item} ${styles.devis}`}>
+      <a href={`${base}#devis`} className={`${styles.item} ${styles.devis}`}>
         Devis
       </a>
       <a href={telHref(ATELIER.phone)} className={styles.item}>
