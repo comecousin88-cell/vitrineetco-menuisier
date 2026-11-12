@@ -1,3 +1,4 @@
+import Atelier from "@/components/Atelier";
 import Confiance from "@/components/Confiance";
 import Galerie from "@/components/Galerie";
 import Hero from "@/components/Hero";
@@ -16,6 +17,7 @@ export default function Home() {
         <Confiance />
         <Galerie />
         <Methode />
+        <Atelier />
         {/* Les sections suivantes arrivent une par une, après validation. */}
         <div style={{ height: "60vh" }} aria-hidden="true" />
       </main>

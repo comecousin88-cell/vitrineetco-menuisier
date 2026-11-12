@@ -32,3 +32,17 @@ export const HERO_SEQUENCE: Sequence = {
   ],
   poster: { src: "/hero/fin.webp", file: "hero-fin.jpg" },
 };
+
+// La traversée de l'atelier : la caméra avance de la porte jusqu'à l'établi. Chargée seulement à l'approche
+// de la section, pour ne pas concurrencer le hero.
+export const ATELIER_SEQUENCE: Sequence = {
+  folder: "/atelier",
+  count: 0,
+  mobileCount: 0,
+  ratio: 16 / 9,
+  plans: [
+    { file: "atelier-1-entree.mp4", share: 0.55 },
+    { file: "atelier-2-etabli.mp4", share: 0.45 },
+  ],
+  poster: { src: "/atelier/fin.webp", file: "atelier-fin.jpg" },
+};
