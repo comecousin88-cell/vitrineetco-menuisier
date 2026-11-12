@@ -1,0 +1,141 @@
+/* La cotation en chaîne : quatre segments bout à bout sur un même trait. Les segments n'ont aucune marge
+   entre eux, pour que le trait reste continu ; seul le texte est rentré. */
+
+.confiance {
+  padding: clamp(2.75rem, 6vw, 4.5rem) var(--gutter);
+}
+
+.chaine {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.segment {
+  display: grid;
+  grid-template-rows: auto 1.75rem auto;
+  justify-items: center;
+  text-align: center;
+}
+
+.valeur,
+.note {
+  padding: 0 0.75rem;
+}
+
+.valeur {
+  align-self: end;
+  font-size: clamp(1.0625rem, 1.5vw, 1.3125rem);
+  font-weight: 600;
+  font-variation-settings: "wdth" var(--mi-etroit);
+  line-height: 1.2;
+}
+
+.note {
+  font-size: 0.875rem;
+  color: var(--graphite-fonce);
+}
+
+/* Le trait de cote, au milieu de la rangée centrale. */
+.trait {
+  position: relative;
+  justify-self: stretch;
+  align-self: center;
+  height: 1px;
+  background: var(--noir);
+  transform-origin: left center;
+}
+
+/* À chaque jonction : la ligne d'attache verticale et le petit trait oblique, comme dans le hero. */
+.tick {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.tick::before,
+.tick::after {
+  content: "";
+  position: absolute;
+  left: -0.5px;
+  width: 1px;
+  background: var(--noir);
+}
+
+.tick::before {
+  top: -0.875rem;
+  height: 1.75rem;
+}
+
+.tick::after {
+  top: -0.4375rem;
+  height: 0.875rem;
+  transform: rotate(45deg);
+}
+
+/* La fermeture à droite : seulement au bout de la chaîne. */
+.tickEnd {
+  display: none;
+  left: 100%;
+}
+
+.segment:last-child .tickEnd {
+  display: block;
+}
+
+/* ---------- Avec animation : le trait se tire, les jonctions apparaissent à son passage. ---------- */
+
+:global(html[data-anim]) .trait {
+  transform: scaleX(0);
+  transition: transform 0.45s cubic-bezier(0.45, 0, 0.55, 1) calc(var(--i) * 0.42s);
+}
+
+:global(html[data-anim]) .tick {
+  opacity: 0;
+  transition: opacity 0.2s calc(var(--i) * 0.42s);
+}
+
+:global(html[data-anim]) .tickEnd {
+  transition-delay: calc(var(--i) * 0.42s + 0.42s);
+}
+
+:global(html[data-anim]) [data-drawn] .trait {
+  transform: none;
+}
+
+:global(html[data-anim]) [data-drawn] .tick {
+  opacity: 1;
+}
+
+/* ---------- Téléphone : deux chaînes de deux ---------- */
+
+@media (max-width: 759px) {
+  .chaine {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 1.75rem;
+  }
+
+  .valeur,
+  .note {
+    padding: 0 0.375rem;
+  }
+
+  .valeur {
+    font-size: 1rem;
+  }
+
+  .note {
+    font-size: 0.8125rem;
+    line-height: 1.35;
+  }
+
+  .segment:nth-child(2n) .tickEnd {
+    display: block;
+  }
+
+  /* Chaque rangée se tire à son tour. */
+  :global(html[data-anim]) .segment:nth-child(2n + 1) .trait,
+  :global(html[data-anim]) .segment:nth-child(2n + 1) .tick {
+    transition-delay: calc(var(--i) * 0.21s);
+  }
+}
