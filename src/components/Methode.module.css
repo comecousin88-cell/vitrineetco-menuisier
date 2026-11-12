@@ -1,0 +1,147 @@
+/* Même grille que le hero : 5 colonnes de texte à gauche, 7 d'images à droite. */
+.methode {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(1.5rem, 3.5vw, 3.5rem);
+  padding: clamp(4rem, 8vw, 7rem) var(--gutter);
+  border-top: 1px solid var(--filet);
+}
+
+.fixe {
+  position: sticky;
+  top: calc(var(--top-h) + clamp(1.5rem, 5vh, 3rem));
+}
+
+.titre {
+  font-size: clamp(2.5rem, 5.4vw, 4.75rem);
+  max-width: 8ch;
+  outline: none;
+}
+
+.intro {
+  max-width: 30ch;
+  margin-top: 1.25rem;
+  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
+}
+
+/* Le sommaire : l'étape en cours passe en noir, marquée du triangle. */
+.sommaire {
+  list-style: none;
+  display: grid;
+  gap: 0.25rem;
+  margin-top: clamp(2rem, 5vh, 3rem);
+}
+
+.repere {
+  display: grid;
+  grid-template-columns: 0.875rem 1.25rem auto;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 2rem;
+  font-weight: 500;
+  color: var(--graphite);
+  transition: color 0.3s;
+}
+
+.triangle {
+  width: 0.6875rem;
+  height: auto;
+  color: var(--sapin);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.repere[data-actif] {
+  color: var(--noir);
+}
+
+.repere[data-actif] .triangle {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Les étapes ---------- */
+
+.etapes {
+  list-style: none;
+  display: grid;
+  gap: clamp(3rem, 7vw, 5.5rem);
+}
+
+.texte {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  max-width: 40rem;
+}
+
+.numero {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 650;
+  font-variation-settings: "wdth" 62;
+  line-height: 0.85;
+  color: var(--chene);
+  -webkit-text-stroke: 0;
+}
+
+.titreEtape {
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+}
+
+.duree {
+  margin-top: 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-variation-settings: "wdth" var(--mi-etroit);
+  color: var(--sapin);
+}
+
+/* ---------- Avec animation : la photo se découvre de gauche à droite, le texte suit. ---------- */
+
+:global(html[data-anim]) .photo {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+:global(html[data-anim]) .texte {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s 0.35s, transform 0.6s 0.35s cubic-bezier(0.2, 0.6, 0.3, 1);
+}
+
+:global(html[data-anim]) [data-vu] .photo {
+  clip-path: inset(0 0 0 0);
+}
+
+:global(html[data-anim]) [data-vu] .texte {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Téléphone : la colonne fixe devient un simple titre ---------- */
+
+@media (max-width: 759px) {
+  .methode {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.25rem;
+  }
+
+  .fixe {
+    position: static;
+  }
+
+  .sommaire {
+    display: none;
+  }
+
+  .texte {
+    gap: 0.875rem;
+  }
+
+  .numero {
+    font-size: 2.75rem;
+  }
+}
