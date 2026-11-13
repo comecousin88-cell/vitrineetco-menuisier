@@ -25,23 +25,22 @@ export const HERO_SEQUENCE: Sequence = {
   folder: "/hero",
   ...sequences.hero,
   ratio: 16 / 9,
+  // Deux plans : l'emboîtement de la queue d'aronde (5,5 s gardées), puis le recul sur le buffet (4,5 s), avec un
+  // fondu de 0,6 s entre les deux. Un plan d'ouverture pourra s'ajouter en tête (voir scripts/prepare_media.py).
   plans: [
-    { file: "hero-1-rabot.mp4", share: 1 / 3 },
-    { file: "hero-2-aronde.mp4", share: 1 / 3 },
-    { file: "hero-3-buffet.mp4", share: 1 / 3 },
+    { file: "hero-2-aronde.mp4", share: 0.55 },
+    { file: "hero-3-buffet.mp4", share: 0.45 },
   ],
   poster: { src: "/hero/fin.webp", file: "hero-fin.jpg" },
 };
 
-// La traversée de l'atelier : la caméra avance de la porte jusqu'à l'établi. Chargée seulement à l'approche
-// de la section, pour ne pas concurrencer le hero.
+// La traversée de l'atelier : la caméra franchit la porte et avance dans l'atelier. Pour l'instant un seul plan
+// (3,8 s propres de atelier-1-entree) ; l'arrivée à l'établi se rajoutera en second plan. Chargée seulement à
+// l'approche de la section, pour ne pas concurrencer le hero.
 export const ATELIER_SEQUENCE: Sequence = {
   folder: "/atelier",
   ...sequences.atelier,
   ratio: 16 / 9,
-  plans: [
-    { file: "atelier-1-entree.mp4", share: 0.55 },
-    { file: "atelier-2-etabli.mp4", share: 0.45 },
-  ],
+  plans: [{ file: "atelier-1-entree.mp4", share: 1 }],
   poster: { src: "/atelier/fin.webp", file: "atelier-fin.jpg" },
 };

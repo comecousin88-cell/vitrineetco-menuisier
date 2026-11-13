@@ -1,7 +1,6 @@
 // La partition du hero et ses cotes. Le temps est sur une échelle de 0 à 10, du haut du hero à sa sortie.
 // Les positions sont en part de l'image source (0 = bord gauche ou haut, 1 = bord droit ou bas) : elles
 // suivent l'image quel que soit l'écran.
-// À recaler sur la vraie vidéo quand elle arrive : ce sont des emplacements prévus d'après le cahier des médias.
 
 export const HERO_SCROLL = "+=230%"; // la longueur de défilement pendant laquelle le hero reste épinglé
 export const FRAMES_END = 9.2; // la dernière image est atteinte ici ; la fin reste à l'écran jusqu'à 10
@@ -15,6 +14,7 @@ export type Cote =
       a: [number, number];
       b: [number, number];
       offset: number; // l'écart entre l'objet mesuré et le trait de cote, en pixels ; le signe choisit le côté
+      labelInside?: boolean; // la valeur se pose côté objet, entre le trait et ce qu'il mesure
       label: string;
       note: string;
     } & Window)
@@ -29,41 +29,35 @@ export type Cote =
       note: string;
     } & Window);
 
+// Deux plans : hero-2-aronde (de 0 à ~5,1 sur l'échelle, l'emboîtement vers 3,8–4,0), fondu, puis hero-3-buffet.
+// Positions relevées sur les vraies images (passages gardés : voir scripts/prepare_media.py).
 export const HERO_COTES: Cote[] = [
   {
-    // Plan 1 : le copeau enroulé sort du rabot. On mesure son épaisseur.
-    kind: "lineaire",
-    id: "copeau",
-    a: [0.6, 0.47],
-    b: [0.6, 0.485],
-    offset: -64, // la cote part vers la gauche : à droite, l'image est rognée sur les écrans étroits
-    label: "0,1 mm",
-    note: "l'épaisseur d'un copeau",
-    draw: [0.9, 2.1],
-    erase: [2.9, 3.3],
-  },
-  {
-    // Plan 2 : la queue d'aronde descend dans son logement. On mesure la pente de son flanc.
+    // La pièce est posée sur les queues d'aronde : on mesure la pente d'un flanc. La cote s'efface avant
+    // l'emboîtement, qui déplace légèrement la pièce.
     kind: "angle",
     id: "aronde",
-    center: [0.5, 0.62],
-    radius: 92,
-    from: -90,
-    to: -76,
+    center: [0.522, 0.565],
+    radius: 70,
+    from: -104,
+    to: -90,
     label: "14°",
     note: "la pente, tracée à la main",
-    draw: [4.0, 5.0],
-    erase: [5.8, 6.1],
+    draw: [0.6, 1.6],
+    erase: [3.3, 3.65],
   },
   {
-    // Plan 3 : le buffet fini. On mesure sa longueur. Cette cote reste, et c'est elle qu'on voit sans animation.
+    // Le buffet fini, au bout du recul : on mesure sa longueur, sous les pieds. Cette cote reste, et c'est elle
+    // qu'on voit sans animation. Sur téléphone, le buffet déborde du cadre : seul le centre de la cote se voit.
     kind: "lineaire",
     id: "buffet",
-    a: [0.385, 0.8],
-    b: [0.615, 0.8],
-    offset: -34,
+    a: [0.2, 0.852],
+    b: [0.805, 0.852],
+    offset: -14,
+    // La valeur se pose au-dessus du trait, entre les pieds : en dessous, le bas du cadre la couperait.
+    labelInside: true,
     label: "1 800 mm",
     note: "Buffet en chêne, Vouvray",
-    draw: [8.3, 9.3],
+    draw: [8.2, 9.1],
   },
 ];

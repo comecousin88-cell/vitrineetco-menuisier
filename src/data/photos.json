@@ -1,1 +1,98 @@
-{}
+{
+  "/atelier/fin.webp": {
+    "width": 2400,
+    "height": 1350
+  },
+  "/contact/portrait.webp": {
+    "width": 800,
+    "height": 1000
+  },
+  "/essences/chene.webp": {
+    "width": 2400,
+    "height": 1350
+  },
+  "/essences/frene.webp": {
+    "width": 2400,
+    "height": 1350
+  },
+  "/essences/noyer.webp": {
+    "width": 2400,
+    "height": 1350
+  },
+  "/essences/pin.webp": {
+    "width": 2400,
+    "height": 1350
+  },
+  "/hero/fin.webp": {
+    "width": 1920,
+    "height": 1080
+  },
+  "/methode/1-visite.webp": {
+    "width": 1800,
+    "height": 1200
+  },
+  "/methode/2-plan.webp": {
+    "width": 1800,
+    "height": 1200
+  },
+  "/methode/3-fabrication.webp": {
+    "width": 1800,
+    "height": 1200
+  },
+  "/methode/4-pose.webp": {
+    "width": 1800,
+    "height": 1200
+  },
+  "/projets/bibliotheque-azay.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/bibliotheque-chinon-avant.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/bibliotheque-chinon.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/cuisine-amboise-avant.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/cuisine-amboise.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/cuisine-tours.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/dressing-joue.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/dressing-vouvray.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/escalier-loches.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/escalier-montlouis-avant.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/escalier-montlouis.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/porte-tours.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/portes-saint-cyr.webp": {
+    "width": 1600,
+    "height": 2000
+  }
+}

@@ -73,6 +73,7 @@ export default function Atelier() {
               pin: true,
               scrub: 0.5,
               invalidateOnRefresh: true,
+              refreshPriority: 2, // après le hero, avant les parallaxes plus bas
             },
           })
           .to({}, { duration: 10 }, 0)

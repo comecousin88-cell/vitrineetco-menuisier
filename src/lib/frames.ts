@@ -77,15 +77,19 @@ export function createFramePlayer(canvas: HTMLCanvasElement, folder: string, cou
     paint();
   }
 
-  // decode() prépare l'image à l'avance : sans cela, le navigateur la décoderait en plein scroll.
+  // On attend que l'image soit chargée, puis decode() la prépare à l'avance (sans quoi le navigateur la
+  // décoderait en plein scroll). Certains navigateurs font traîner decode() : au-delà de 1,5 s, on passe outre
+  // plutôt que de rester bloqué sur la première image.
   async function load(index: number) {
     const image = new Image();
     image.src = `${folder}/${pad(index)}.webp`;
-    try {
-      await image.decode();
-    } catch {
-      return;
-    }
+    const loaded = await new Promise<boolean>((resolve) => {
+      if (image.complete && image.naturalWidth) return resolve(true);
+      image.onload = () => resolve(true);
+      image.onerror = () => resolve(false);
+    });
+    if (!loaded) return;
+    await Promise.race([image.decode().catch(() => undefined), new Promise((resolve) => setTimeout(resolve, 1500))]);
     if (stopped) return;
     frames[index] = image;
     shown = "";

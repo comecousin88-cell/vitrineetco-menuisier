@@ -19,6 +19,18 @@ fur et à mesure. Les images de début, de raccord et de fin des vidéos servent
 ne les affiche pas, sauf `hero-fin.jpg` et `atelier-fin.jpg`. Une planche de contrôle de chaque séquence est
 écrite dans `source/_controle/`.
 
+## État au 13 novembre 2026
+
+- **Hero : deux plans.** `hero-1-rabot.mp4` est retiré ; le hero commence sur l'assemblage (`hero-2-aronde`)
+  et recule sur le buffet (`hero-3-buffet`), avec un fondu entre les deux. Un plan d'ouverture pourra se
+  rajouter en tête de la liste dans `scripts/prepare_media.py`.
+- **Passages gardés** (le reste est écarté pour défauts) : `hero-2-aronde` 1,0 → 6,5 s, `hero-3-buffet`
+  3,5 → 8,0 s, `atelier-1-entree` 0,0 → 3,8 s. Détail des défauts en commentaire dans le script.
+- **À refaire : `atelier-2-etabli.mp4`.** Le fichier livré est un plan de rabotage généré à partir de
+  `hero-1-debut.jpg`, pas l'arrivée à l'établi. Le regénérer à partir de
+  `source/_controle/atelier-1-entree-derniere.png` (dernière image du passage gardé, à 3,8 s), avec
+  `atelier-fin.jpg` comme image de fin. En attendant, la traversée de l'atelier n'a qu'un plan.
+
 ## Règles communes à tout le site
 
 | Sujet | Règle |

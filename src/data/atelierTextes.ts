@@ -2,7 +2,7 @@
 // laisse la place au suivant ; le dernier reste jusqu'à la fin.
 
 export const ATELIER_SCROLL = "+=300%";
-export const ATELIER_LONGUEUR_M = 18; // de la porte à l'établi : la règle du bas compte les mètres parcourus
+export const ATELIER_LONGUEUR_M = 9; // la distance parcourue pendant la traversée (le seuil et la moitié de l'atelier) ; à allonger avec le plan 2
 
 export const ATELIER_TEXTES = [
   {

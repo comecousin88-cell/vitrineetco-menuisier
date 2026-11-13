@@ -48,8 +48,9 @@ export function coteGeometry(cote: Cote, place: (nx: number, ny: number) => Poin
       line(add(da, tick, -1), add(da, tick, 1)),
       line(add(db, tick, -1), add(db, tick, 1)),
     ];
-    const away = { x: n.x * side, y: n.y * side };
-    const mid = add({ x: (da.x + db.x) / 2, y: (da.y + db.y) / 2 }, away, 12);
+    // La valeur s'éloigne de l'objet, ou s'en rapproche (labelInside) : alors elle remonte de ses deux lignes.
+    const away = cote.labelInside ? { x: -n.x * side, y: -n.y * side } : { x: n.x * side, y: n.y * side };
+    const mid = add({ x: (da.x + db.x) / 2, y: (da.y + db.y) / 2 }, away, cote.labelInside ? 40 : 12);
     const horizontal = Math.abs(away.x) > Math.abs(away.y);
     return {
       id: cote.id,
@@ -57,7 +58,7 @@ export function coteGeometry(cote: Cote, place: (nx: number, ny: number) => Poin
       label: {
         ...mid,
         anchor: horizontal ? (away.x > 0 ? "start" : "end") : "middle",
-        baseline: horizontal ? "middle" : away.y > 0 ? "hanging" : "auto",
+        baseline: horizontal ? "middle" : away.y > 0 || cote.labelInside ? "hanging" : "auto",
       },
       text: cote.label,
       note: cote.note,

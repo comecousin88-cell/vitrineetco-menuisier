@@ -1,10 +1,10 @@
 {
   "hero": {
-    "count": 0,
-    "mobileCount": 0
+    "count": 80,
+    "mobileCount": 41
   },
   "atelier": {
-    "count": 0,
-    "mobileCount": 0
+    "count": 80,
+    "mobileCount": 41
   }
 }

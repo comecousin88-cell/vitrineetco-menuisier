@@ -98,6 +98,9 @@ export default function Hero() {
               pin: true,
               scrub: 0.4,
               invalidateOnRefresh: true,
+              // Le hero est créé après les autres sections (il attend la mesure de ses cotes), mais son épinglage
+              // décale tout ce qui suit : il doit être recalculé en premier.
+              refreshPriority: 3,
             },
           })
           // La timeline couvre toujours toute l'échelle, pour que les instants de la partition restent justes.
@@ -138,6 +141,11 @@ export default function Hero() {
 
         return () => player?.destroy();
       });
+
+      // Le hero est créé après les autres sections : une fois son épinglage en place, toutes les positions sont
+      // recalculées (dans l'ordre des refreshPriority), hors du bloc ci-dessus pour ne pas le relancer.
+      const frame = requestAnimationFrame(() => ScrollTrigger.refresh());
+      return () => cancelAnimationFrame(frame);
     },
     { scope: root, dependencies: [ready] },
   );
