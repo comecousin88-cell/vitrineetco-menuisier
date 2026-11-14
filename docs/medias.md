@@ -19,17 +19,19 @@ fur et à mesure. Les images de début, de raccord et de fin des vidéos servent
 ne les affiche pas, sauf `hero-fin.jpg` et `atelier-fin.jpg`. Une planche de contrôle de chaque séquence est
 écrite dans `source/_controle/`.
 
-## État au 13 novembre 2026
+## État au 14 novembre 2026
 
-- **Hero : deux plans.** `hero-1-rabot.mp4` est retiré ; le hero commence sur l'assemblage (`hero-2-aronde`)
-  et recule sur le buffet (`hero-3-buffet`), avec un fondu entre les deux. Un plan d'ouverture pourra se
-  rajouter en tête de la liste dans `scripts/prepare_media.py`.
-- **Passages gardés** (le reste est écarté pour défauts) : `hero-2-aronde` 1,0 → 6,5 s, `hero-3-buffet`
-  3,5 → 8,0 s, `atelier-1-entree` 0,0 → 3,8 s. Détail des défauts en commentaire dans le script.
-- **À refaire : `atelier-2-etabli.mp4`.** Le fichier livré est un plan de rabotage généré à partir de
-  `hero-1-debut.jpg`, pas l'arrivée à l'établi. Le regénérer à partir de
-  `source/_controle/atelier-1-entree-derniere.png` (dernière image du passage gardé, à 3,8 s), avec
-  `atelier-fin.jpg` comme image de fin. En attendant, la traversée de l'atelier n'a qu'un plan.
+- **Hero : deux plans**, `hero-2-aronde` (1,0 → 6,5 s) puis `hero-3-buffet` (3,5 → 8,0 s), fondu entre les deux,
+  agrandis par Real-ESRGAN. Un plan d'ouverture pourra se rajouter en tête de liste dans `scripts/prepare_media.py`.
+- **Atelier : trois passages.** `atelier-1-entree` (0,0 → 3,8 s), puis `atelier-2-etabli` en deux morceaux :
+  l'allée (0,0 → 5,0 s, raccord direct à 0,99) et le gros plan sur l'établi (7,5 → 9,9 s, sans visage).
+  Gemini a fait un fondu vers un gros plan à 5,1 s, avec le visage de l'artisan visible de 5,5 à 7,5 s.
+  Le passage actuel (zoom avant léger puis fondu) n'est pas convaincant : il reste en attendant mieux.
+- **À générer : `atelier-2-raccord.mp4`**, de `source/_controle/atelier-2-avant-coupure.png` (5,0 s) jusqu'à
+  `atelier-fin.jpeg`. La caméra continue d'avancer dans l'allée vers l'établi du fond, ralentit et s'abaisse vers
+  le plan de travail : le visage de l'artisan sort du cadre par le haut avant d'être reconnaissable. 3 à 5 s.
+  Il remplacera le fondu entre l'allée et le gros plan.
+- **À refaire plus tard** : `methode-1-visite`, les quatre essences, `projet-bibliotheque-azay`.
 
 ## Règles communes à tout le site
 

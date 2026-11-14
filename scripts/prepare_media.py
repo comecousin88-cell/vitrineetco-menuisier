@@ -112,9 +112,19 @@ SEQUENCES = {
             # d'outils qui apparaît en transparence sur le mur de droite (dès 4,0 s), puis un panneau au premier
             # plan qui disparaît (8,5–9,9 s).
             {"nom": "atelier-1-entree", "debut": 0.0, "fin": 3.8},
-            # Le plan 2 (arrivée à l'établi) se rajoutera ici, généré à partir de la dernière image gardée du
-            # plan 1 (source/_controle/atelier-1-entree-derniere.png) :
-            # {"nom": "atelier-2-etabli", "debut": 0.0, "fin": 5.0, "fondu": 0},
+            # atelier-2-etabli, générée depuis la dernière image ci-dessus : raccord direct (similarité 0,99).
+            # L'avancée dans l'allée vers l'établi du fond, où travaille l'artisan. Gemini y a fait un fondu
+            # (5,1–5,5 s) vers un gros plan : on s'arrête avant, et l'on finit par un léger zoom avant sur l'établi.
+            {
+                "nom": "atelier-2-etabli",
+                "etiquette": "atelier-2-allee",
+                "debut": 0.0,
+                "fin": 5.0,
+                "zoom": {"depuis": 1.5, "echelle": 1.25, "centre": [0.52, 0.45]},
+            },
+            # Le gros plan sur l'établi, sans visage à partir de 7,5 s (écarté : 5,5–7,5 s, visage visible),
+            # jusqu'à la dernière image, identique à atelier-fin.jpeg (0,99). Fondu d'une seconde depuis l'allée.
+            {"nom": "atelier-2-etabli", "etiquette": "atelier-2-gros-plan", "debut": 7.5, "fin": 9.9, "fondu": 1.0},
         ],
         "frames": 80,
     },
@@ -220,6 +230,26 @@ def read_passage(path: Path, debut: float, fin: float):
     if not frames:
         raise SystemExit(f"{path.name} : aucune image lisible entre {debut} et {fin} s")
     return frames, fps
+
+
+def push_in(frames, fps, zoom):
+    """Léger zoom avant progressif sur la fin d'un passage : la caméra semble s'approcher.
+    zoom = {"depuis": secondes avant la fin du passage, "echelle": 1.15, "centre": [x, y] en part de l'image}."""
+    start = max(0, len(frames) - int(round(zoom["depuis"] * fps)))
+    cx, cy = zoom.get("centre", [0.5, 0.5])
+    result = list(frames[:start])
+    span = max(1, len(frames) - 1 - start)
+    for k, frame in enumerate(frames[start:]):
+        t = k / span
+        ease = t * t * (3 - 2 * t)  # démarre et finit en douceur
+        scale = 1 + (zoom["echelle"] - 1) * ease
+        h, w = frame.shape[:2]
+        cw, ch = w / scale, h / scale
+        x0 = min(max(cx * w - cw / 2, 0), w - cw)
+        y0 = min(max(cy * h - ch / 2, 0), h - ch)
+        matrix = np.float32([[scale, 0, -x0 * scale], [0, scale, -y0 * scale]])
+        result.append(cv2.warpAffine(frame, matrix, (w, h), flags=cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REFLECT))
+    return result
 
 
 def sheet(images, labels, path: Path, columns=4, size=(480, 270)):
@@ -402,12 +432,16 @@ def prepare_sequence(name, spec, esrgan):
     plans = []
     for plan, path in zip(spec["plans"], paths):
         frames, fps = read_passage(path, plan["debut"], plan["fin"])
+        if plan.get("zoom"):
+            frames = push_in(frames, fps, plan["zoom"])
         plans.append((frames, fps))
         print(f"  {path.name} : {plan['debut']:.2f} → {plan['fin']:.2f} s, {len(frames)} images")
         # La planche du passage gardé, 8 images, et sa dernière image pour générer le plan suivant.
         picks = [round(i * (len(frames) - 1) / 7) for i in range(8)]
-        sheet([frames[i] for i in picks], [f"{plan['debut'] + i / fps:.2f}s" for i in picks], CONTROL / f"{plan['nom']}-passage.jpg")
-        cv2.imwrite(str(CONTROL / f"{plan['nom']}-derniere.png"), frames[-1])
+        # « etiquette » distingue deux passages tirés de la même vidéo.
+        label = plan.get("etiquette", plan["nom"])
+        sheet([frames[i] for i in picks], [f"{plan['debut'] + i / fps:.2f}s" for i in picks], CONTROL / f"{label}-passage.jpg")
+        cv2.imwrite(str(CONTROL / f"{label}-derniere.png"), frames[-1])
 
     balanced = white_balance([frames for frames, _ in plans])
     plans = [(frames, fps) for frames, (_, fps) in zip(balanced, plans)]

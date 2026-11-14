@@ -6,12 +6,12 @@ export const FAQ = [
   {
     question: "Combien coûte un meuble sur mesure ?",
     reponse:
-      "Cela dépend des dimensions, de l'essence et de la finition. Les prix « à partir de » donnent un ordre d'idée ; après la visite, je vous remets un prix ferme, sans surprise.",
+      "Cela dépend des dimensions, de l'essence et de la finition. Comptez à partir de 1 000 € pour des portes ou des placards, 2 000 € pour une bibliothèque, 3 000 € pour un dressing, 3 500 € pour un escalier en chêne et 8 000 € pour une cuisine. Après la visite, je vous remets un prix ferme, sans surprise.",
   },
   {
     question: "Quels sont les délais ?",
     reponse:
-      "Comptez une dizaine de jours pour le devis, puis 2 à 6 semaines de fabrication selon l'ouvrage. Je vous donne une date de pose dès la commande.",
+      "Comptez une dizaine de jours pour le devis, puis de 3 à 5 semaines pour des portes ou des placards jusqu'à 8 à 10 semaines pour une cuisine, de la commande à la pose. Je vous donne une date de pose dès la commande.",
   },
   {
     question: "Où intervenez-vous ?",

@@ -1,8 +1,9 @@
 // La partition de la traversée de l'atelier, sur une échelle de 0 à 10. Chaque texte entre, reste, puis
-// laisse la place au suivant ; le dernier reste jusqu'à la fin.
+// laisse la place au suivant ; le dernier reste jusqu'à la fin. Repères : l'allée jusqu'à ~7,7, le passage vers
+// l'établi de ~7,7 à ~8,9, puis le gros plan sur l'établi.
 
 export const ATELIER_SCROLL = "+=300%";
-export const ATELIER_LONGUEUR_M = 9; // la distance parcourue pendant la traversée (le seuil et la moitié de l'atelier) ; à allonger avec le plan 2
+export const ATELIER_LONGUEUR_M = 18; // de la porte à l'établi : la règle du bas compte les mètres parcourus
 
 export const ATELIER_TEXTES = [
   {
@@ -14,13 +15,13 @@ export const ATELIER_TEXTES = [
   {
     titre: "Le bois attend son tour",
     texte: "Les planches sèchent ici plusieurs années avant de devenir un meuble.",
-    entree: 4.5,
-    sortie: 6.7,
+    entree: 4.3,
+    sortie: 7.0,
   },
   {
     titre: "Tout finit à l'établi",
     texte: "Même avec les machines, le dernier ajustement se fait à la main.",
-    entree: 7.3,
+    entree: 7.9,
     sortie: null,
   },
 ] as const;

@@ -1,11 +1,11 @@
 import Cta from "@/components/Cta";
-import { A_COMPLETER, PRIX, TYPES_PROJET } from "@/data/prix";
+import { NOTE_PRIX, TYPES_PROJET } from "@/data/prix";
 import styles from "./Prix.module.css";
 
 const euros = (n: number) => `${n.toLocaleString("fr-FR")} €`;
 
 // Les prix et délais, présentés comme une nomenclature d'atelier : une ligne par ouvrage, les chiffres
-// alignés en colonne. Tant qu'une valeur manque, « [À COMPLÉTER] » s'affiche, bien visible.
+// alignés en colonne.
 export default function Prix() {
   return (
     <section id="prix" className={styles.prix} aria-labelledby="prix-titre">
@@ -13,9 +13,7 @@ export default function Prix() {
         <h2 id="prix-titre" className={styles.titre} tabIndex={-1}>
           Prix et délais
         </h2>
-        <p className={styles.intro}>
-          Des ordres de grandeur, pose comprise. Après la visite, je vous donne un prix ferme, qui ne bouge plus.
-        </p>
+        <p className={styles.intro}>Des ordres de grandeur. Après la visite, je vous donne un prix ferme, qui ne bouge plus.</p>
       </div>
 
       <table className={styles.table}>
@@ -32,34 +30,24 @@ export default function Prix() {
           </tr>
         </thead>
         <tbody>
-          {TYPES_PROJET.map((type) => {
-            const { aPartirDe, delaiSemaines } = PRIX[type.id];
-            return (
-              <tr key={type.id}>
-                <th scope="row">{type.label}</th>
-                <td className={styles.nombre}>
-                  {aPartirDe === null ? (
-                    <span className={styles.aCompleter}>{A_COMPLETER}</span>
-                  ) : (
-                    <span className="chiffres">{euros(aPartirDe)}</span>
-                  )}
-                  <span className={styles.unite}>{type.unite}</span>
-                </td>
-                <td className={styles.nombre}>
-                  {delaiSemaines === null ? (
-                    <span className={styles.aCompleter}>{A_COMPLETER}</span>
-                  ) : (
-                    <span className="chiffres">{delaiSemaines} semaines</span>
-                  )}
-                </td>
-              </tr>
-            );
-          })}
+          {TYPES_PROJET.map((type) => (
+            <tr key={type.id}>
+              <th scope="row">{type.label}</th>
+              <td className={`${styles.nombre} chiffres`}>{euros(type.aPartirDe)}</td>
+              <td className={`${styles.nombre} chiffres`}>{type.delai}</td>
+            </tr>
+          ))}
+          <tr>
+            <th scope="row">Déplacement pour le devis</th>
+            <td className={styles.nombre} colSpan={2}>
+              Gratuit dans la zone d&apos;intervention
+            </td>
+          </tr>
         </tbody>
       </table>
 
       <div className={styles.pied}>
-        <p className={styles.note}>Prix TTC indicatifs. La visite et le devis sont gratuits dans ma zone d&apos;intervention.</p>
+        <p className={styles.note}>{NOTE_PRIX}</p>
         <Cta />
       </div>
     </section>

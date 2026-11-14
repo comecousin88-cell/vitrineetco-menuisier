@@ -198,7 +198,7 @@ export default function ProjetOuvert({
             className={styles.cta}
             onClick={() => {
               // Le formulaire s'ouvre avec le type de ce projet déjà coché.
-              preremplirDevis(projet.slug.startsWith("portes-") ? "placard" : TYPE_PAR_CATEGORIE[projet.categorie]);
+              preremplirDevis(TYPE_PAR_CATEGORIE[projet.categorie]);
               onClose();
             }}
           >

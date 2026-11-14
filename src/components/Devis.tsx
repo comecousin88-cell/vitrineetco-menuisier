@@ -446,7 +446,7 @@ export default function Devis() {
                       {err("delai")}
                     </p>
                   )}
-                  <p className={styles.consigne}>Aujourd&apos;hui, je fabrique avec 2 à 6 semaines d&apos;avance.</p>
+                  <p className={styles.consigne}>Selon l&apos;ouvrage, comptez de 3 à 10 semaines entre la commande et la pose.</p>
                 </>
               )}
 

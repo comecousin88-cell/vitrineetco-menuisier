@@ -67,27 +67,6 @@
   font-variation-settings: "wdth" var(--mi-etroit);
 }
 
-.unite {
-  display: block;
-  margin-top: 0.125rem;
-  font-size: 0.8125rem;
-  font-weight: 400;
-  font-variation-settings: "wdth" 100;
-  color: var(--graphite-fonce);
-}
-
-/* Une valeur à fournir : impossible à prendre pour un vrai prix. */
-.aCompleter {
-  display: inline-block;
-  padding: 0.125rem 0.375rem;
-  border: 1px dashed var(--erreur);
-  border-radius: 2px;
-  color: var(--erreur);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
 .pied {
   display: flex;
   flex-wrap: wrap;
@@ -115,9 +94,5 @@
 
   .table .nombre {
     padding-left: 0.75rem;
-  }
-
-  .unite {
-    font-size: 0.75rem;
   }
 }

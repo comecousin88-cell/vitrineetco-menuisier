@@ -20,7 +20,7 @@ export const ETAPES = [
     slug: "fabrication",
     titre: "Fabrication à l'atelier",
     texte: "Je débite, j'assemble et je finis chaque pièce à Montlouis. Vous pouvez passer voir où ça en est.",
-    duree: "2 à 6 semaines",
+    duree: "3 à 10 semaines selon l'ouvrage, pose comprise",
     photo: { src: "/methode/3-fabrication.webp", file: "methode-3-fabrication.jpg" },
     alt: "Deux mains serrent un serre-joint sur un panneau de chêne collé, sur l'établi.",
   },
