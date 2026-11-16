@@ -12,6 +12,7 @@ export function createFramePlayer(canvas: HTMLCanvasElement, folder: string, cou
   // alpha: false : le navigateur sait que l'image est opaque, ce qui allège chaque affichage.
   const context = canvas.getContext("2d", { alpha: false });
   const frames: (HTMLImageElement | undefined)[] = new Array(count);
+  canvas.dataset.total = String(count);
   let wanted = 0;
   let shown = "";
   let stopped = false;
@@ -95,6 +96,8 @@ export function createFramePlayer(canvas: HTMLCanvasElement, folder: string, cou
     await Promise.race([image.decode().catch(() => undefined), new Promise((resolve) => setTimeout(resolve, 1500))]);
     if (stopped) return;
     frames[index] = image;
+    // Le nombre d'images prêtes, lisible de l'extérieur (l'enregistrement de l'aperçu attend la séquence entière).
+    canvas.dataset.frames = String(frames.filter(Boolean).length);
     shown = "";
     paint();
   }
