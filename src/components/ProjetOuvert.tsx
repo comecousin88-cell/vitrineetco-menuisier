@@ -13,6 +13,14 @@ import styles from "./ProjetOuvert.module.css";
 type Vue = "ensemble" | "detail" | "avant";
 const EASE = [0.4, 0, 0.2, 1] as const;
 const SIZES = "(min-width: 760px) 55vw, 100vw";
+const FOND_PLEIN = "rgba(237, 237, 231, 1)"; // --platre
+const FOND_VIDE = "rgba(237, 237, 231, 0)";
+const apparition = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.35, ease: EASE },
+} as const;
 
 // Un projet en grand. La photo arrive de sa vignette (même layoutId) ; à droite, le cartouche, comme dans le
 // coin d'un plan d'atelier : ouvrage, lieu, essence, dimensions, temps de fabrication et de pose.
@@ -91,12 +99,13 @@ export default function ProjetOuvert({
       aria-labelledby="projet-titre"
       data-lenis-prevent
       onKeyDown={onKeyDown}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      // Seul le fond apparaît en fondu : la photo, elle, part de sa vignette à pleine opacité.
+      initial={{ backgroundColor: FOND_VIDE }}
+      animate={{ backgroundColor: FOND_PLEIN }}
+      exit={{ backgroundColor: FOND_VIDE }}
       transition={{ duration: 0.35, ease: EASE }}
     >
-      <div className={styles.barre}>
+      <motion.div className={styles.barre} {...apparition}>
         <p className={`${styles.compteur} chiffres`}>
           {index + 1} sur {projets.length}
         </p>
@@ -115,13 +124,14 @@ export default function ProjetOuvert({
             Fermer
           </button>
         </div>
-      </div>
+      </motion.div>
 
       <div className={styles.corps}>
         <div className={styles.visuel}>
           <motion.div
             layoutId={shared ? `photo-${projet.slug}` : undefined}
             className={styles.image}
+            {...(shared ? {} : apparition)}
             transition={{ duration: 0.5, ease: EASE }}
           >
             {vue === "avant" && projet.avantApres ? (
@@ -141,7 +151,7 @@ export default function ProjetOuvert({
             )}
           </motion.div>
 
-          <div className={styles.vues} role="group" aria-label="Vues du projet">
+          <motion.div className={styles.vues} role="group" aria-label="Vues du projet" {...apparition}>
             {choix.map((c) => (
               <button
                 key={c.id}
@@ -153,7 +163,7 @@ export default function ProjetOuvert({
                 {c.label}
               </button>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         <motion.div
