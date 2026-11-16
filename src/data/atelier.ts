@@ -41,4 +41,4 @@ export const telHref = (phone: string) => `tel:+33${phone.replace(/\s/g, "").sli
 export const yearsOfTrade = (now = new Date()) => now.getFullYear() - ATELIER.foundedYear;
 
 // L'adresse du site une fois en ligne : sert aux liens canoniques et aux données structurées.
-export const SITE_URL = "https://demo-menuisier.vercel.app";
+export const SITE_URL = "https://vitrineetco-menuisier.vercel.app";
