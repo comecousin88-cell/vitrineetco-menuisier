@@ -38,7 +38,10 @@ export function createFramePlayer(canvas: HTMLCanvasElement, folder: string, cou
     }
     if (!frame) return;
     const next = frames[index + 1];
-    const mix = next && source === index ? Math.round((wanted - index) * 16) / 16 : 0;
+    // Le fondu entre deux images voisines ne joue qu'au milieu de l'intervalle : à l'arrêt, l'image est presque
+    // toujours nette (sans quoi un geste rapide, comme le maillet, apparaîtrait en double).
+    const between = Math.min(1, Math.max(0, (wanted - index - 0.35) / 0.3));
+    const mix = next && source === index ? Math.round(between * 16) / 16 : 0;
     // Rien à redessiner si rien n'a changé : le scroll rapporte bien plus de positions que d'images.
     const state = `${source}:${mix}:${canvas.width}:${canvas.height}`;
     if (state === shown) return;
