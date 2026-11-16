@@ -9,7 +9,7 @@ import Photo from "@/components/Photo";
 import { ATELIER, telHref } from "@/data/atelier";
 import { FRAMES_END, HERO_COTES, HERO_SCROLL } from "@/data/hero";
 import { HERO_SEQUENCE } from "@/data/media";
-import { coteGeometry, placeInCover, type CoteGeometry } from "@/lib/cotes";
+import { coteAt, coteGeometry, placeInCover, type CoteGeometry } from "@/lib/cotes";
 import { createFramePlayer } from "@/lib/frames";
 import styles from "./Hero.module.css";
 
@@ -20,8 +20,11 @@ const WIDE = "(min-width: 760px)";
 const MOBILE_CROP = 3 / 4 / HERO_SEQUENCE.ratio;
 const FINAL_COTE = HERO_COTES[HERO_COTES.length - 1].id;
 
-// Les cotes, redessinées à chaque changement de taille du cadre pour rester sur l'objet mesuré.
-function useCotes(box: React.RefObject<HTMLDivElement | null>) {
+type Place = (nx: number, ny: number) => { x: number; y: number };
+
+// Les cotes, redessinées à chaque changement de taille du cadre pour rester sur l'objet mesuré. Celles qui suivent
+// un mouvement de caméra sont recalculées à l'instant courant de la séquence (progress), puis à chaque image.
+function useCotes(box: React.RefObject<HTMLDivElement | null>, progress: React.RefObject<number>, placeRef: React.RefObject<{ place: Place; mobile: boolean } | null>) {
   const [cotes, setCotes] = useState<{ width: number; height: number; items: CoteGeometry[] } | null>(null);
   useEffect(() => {
     const element = box.current;
@@ -33,21 +36,25 @@ function useCotes(box: React.RefObject<HTMLDivElement | null>) {
       const wide = window.matchMedia(WIDE).matches;
       const hasFrames = (wide ? HERO_SEQUENCE.count : HERO_SEQUENCE.mobileCount) > 0;
       const crop = wide || !hasFrames ? 1 : MOBILE_CROP;
-      const place = (nx: number, ny: number) => placeInCover(nx, ny, { width, height }, HERO_SEQUENCE.ratio, crop);
-      setCotes({ width, height, items: HERO_COTES.map((cote) => coteGeometry(cote, place)) });
+      const place: Place = (nx, ny) => placeInCover(nx, ny, { width, height }, HERO_SEQUENCE.ratio, crop);
+      const mobile = crop < 1;
+      placeRef.current = { place, mobile };
+      setCotes({ width, height, items: HERO_COTES.map((cote) => coteGeometry(coteAt(cote, progress.current, mobile), place)) });
     };
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(element);
     return () => observer.disconnect();
-  }, [box]);
+  }, [box, progress, placeRef]);
   return cotes;
 }
 
 export default function Hero() {
   const root = useRef<HTMLElement>(null);
   const box = useRef<HTMLDivElement>(null);
-  const cotes = useCotes(box);
+  const progress = useRef(0);
+  const placeRef = useRef<{ place: Place; mobile: boolean } | null>(null);
+  const cotes = useCotes(box, progress, placeRef);
   const ready = cotes !== null;
 
   useGSAP(
@@ -71,6 +78,27 @@ export default function Hero() {
         const player = count && canvas ? createFramePlayer(canvas, `${HERO_SEQUENCE.folder}/${wide ? "desktop" : "mobile"}`, count) : null;
         const lastFrame = Math.max(count - 1, 1);
         const video = { frame: 0 };
+
+        // Les cotes qui suivent la caméra : leurs traits et leur valeur bougent avec l'image.
+        const suivies = HERO_COTES.filter((cote) => cote.kind === "lineaire" && cote.suivi).map((cote) => ({
+          cote,
+          paths: q(`[data-cote=${cote.id}] [data-trait]`).map((trait) => trait.querySelectorAll("path")),
+          text: q<SVGTextElement>(`[data-cote=${cote.id}] [data-valeur]`)[0],
+        }));
+        const suivre = (p: number) => {
+          progress.current = p;
+          const placement = placeRef.current;
+          if (!placement) return;
+          for (const { cote, paths, text } of suivies) {
+            const geometry = coteGeometry(coteAt(cote, p, placement.mobile), placement.place);
+            geometry.paths.forEach((d, i) => paths[i]?.forEach((path) => path.setAttribute("d", d)));
+            if (text) {
+              text.setAttribute("x", String(geometry.label.x));
+              text.setAttribute("y", String(geometry.label.y));
+              text.querySelector("tspan + tspan")?.setAttribute("x", String(geometry.label.x));
+            }
+          }
+        };
 
         // En attendant la vraie vidéo, l'emplacement provisoire dit quel plan est à l'écran.
         const [planLabel] = q<HTMLElement>("[data-h=plan]");
@@ -113,6 +141,7 @@ export default function Hero() {
               onUpdate: () => {
                 player?.draw(video.frame);
                 showPlan(video.frame / lastFrame);
+                suivre(video.frame / lastFrame);
               },
             },
             0,
@@ -199,12 +228,12 @@ export default function Hero() {
               className={styles.canvas}
               data-h="sequence"
               role="img"
-              aria-label="Des mains passent un rabot sur une planche de chêne, emboîtent une queue d'aronde, puis le buffet fini apparaît dans un salon."
+              aria-label="Une main glisse sur le plateau d'un buffet en chêne, puis la caméra recule et le buffet fini apparaît dans un salon."
             />
           ) : (
             <div className={styles.placeholder} aria-hidden="true">
               <span className={styles.placeholderPlan} data-h="plan">
-                Plan 1 sur 3 : {HERO_SEQUENCE.plans[0].file}
+                Plan 1 sur {HERO_SEQUENCE.plans.length} : {HERO_SEQUENCE.plans[0].file}
               </span>
               <span className={styles.placeholderBar} data-h="bar" />
             </div>

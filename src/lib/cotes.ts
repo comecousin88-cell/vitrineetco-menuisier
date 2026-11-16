@@ -87,3 +87,26 @@ export function coteGeometry(cote: Cote, place: (nx: number, ny: number) => Poin
     note: cote.note,
   };
 }
+
+// La cote à un instant de la séquence (progress, de 0 à 1) : si elle suit un recul de caméra, ses points se
+// rapprochent du centre du recul selon l'échelle, interpolée entre les relevés. Sinon, elle ne bouge pas.
+export function coteAt(cote: Cote, progress: number, mobile: boolean): Cote {
+  if (cote.kind !== "lineaire") return cote;
+  const offset = mobile && cote.offsetMobile !== undefined ? cote.offsetMobile : cote.offset;
+  if (!cote.suivi) return { ...cote, offset };
+  const { centre, echelles } = cote.suivi;
+  let scale = echelles[echelles.length - 1][1];
+  for (let i = 0; i < echelles.length - 1; i++) {
+    const [p0, s0] = echelles[i];
+    const [p1, s1] = echelles[i + 1];
+    if (progress <= p1) {
+      scale = progress <= p0 ? s0 : s0 + ((progress - p0) / (p1 - p0)) * (s1 - s0);
+      break;
+    }
+  }
+  const move = ([x, y]: [number, number]): [number, number] => [
+    centre[0] + (x - centre[0]) * scale,
+    centre[1] + (y - centre[1]) * scale,
+  ];
+  return { ...cote, offset, a: move(cote.a), b: move(cote.b) };
+}

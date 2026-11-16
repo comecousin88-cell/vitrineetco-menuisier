@@ -3,9 +3,17 @@
     "width": 2400,
     "height": 1350
   },
+  "/contact/facade.webp": {
+    "width": 1800,
+    "height": 1200
+  },
   "/contact/portrait.webp": {
     "width": 800,
     "height": 1000
+  },
+  "/devis/copeaux.webp": {
+    "width": 1920,
+    "height": 1080
   },
   "/essences/chene.webp": {
     "width": 2400,
@@ -43,11 +51,19 @@
     "width": 1800,
     "height": 1200
   },
+  "/projets/bibliotheque-azay-detail.webp": {
+    "width": 1600,
+    "height": 2000
+  },
   "/projets/bibliotheque-azay.webp": {
     "width": 1600,
     "height": 2000
   },
   "/projets/bibliotheque-chinon-avant.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/bibliotheque-chinon-detail.webp": {
     "width": 1600,
     "height": 2000
   },
@@ -59,7 +75,15 @@
     "width": 1600,
     "height": 2000
   },
+  "/projets/cuisine-amboise-detail.webp": {
+    "width": 1600,
+    "height": 2000
+  },
   "/projets/cuisine-amboise.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/cuisine-tours-detail.webp": {
     "width": 1600,
     "height": 2000
   },
@@ -67,11 +91,23 @@
     "width": 1600,
     "height": 2000
   },
+  "/projets/dressing-joue-detail.webp": {
+    "width": 1600,
+    "height": 2000
+  },
   "/projets/dressing-joue.webp": {
     "width": 1600,
     "height": 2000
   },
+  "/projets/dressing-vouvray-detail.webp": {
+    "width": 1600,
+    "height": 2000
+  },
   "/projets/dressing-vouvray.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/escalier-loches-detail.webp": {
     "width": 1600,
     "height": 2000
   },
@@ -83,11 +119,23 @@
     "width": 1600,
     "height": 2000
   },
+  "/projets/escalier-montlouis-detail.webp": {
+    "width": 1600,
+    "height": 2000
+  },
   "/projets/escalier-montlouis.webp": {
     "width": 1600,
     "height": 2000
   },
+  "/projets/porte-tours-detail.webp": {
+    "width": 1600,
+    "height": 2000
+  },
   "/projets/porte-tours.webp": {
+    "width": 1600,
+    "height": 2000
+  },
+  "/projets/portes-saint-cyr-detail.webp": {
     "width": 1600,
     "height": 2000
   },

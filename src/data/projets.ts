@@ -108,10 +108,10 @@ export const PROJETS: Projet[] = [
   {
     slug: "bibliotheque-azay",
     categorie: "bibliotheques",
-    titre: "Bibliothèque en noyer et pin",
+    titre: "Bibliothèque en pin massif",
     ville: "Azay-le-Rideau",
     phrase: "Des tablettes de 32 mm d'épaisseur : elles ne plieront pas sous les livres.",
-    essence: "Noyer, montants en pin brut",
+    essence: "Pin sylvestre, huilé incolore",
     dimensions: "4 600 × 2 900 mm",
     fabrication: "2 semaines à l'atelier",
     pose: "1 jour",

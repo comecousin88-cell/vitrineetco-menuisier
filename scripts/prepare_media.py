@@ -93,15 +93,15 @@ PHOTOS = {
 SEQUENCES = {
     "hero": {
         "plans": [
-            # Un plan d'ouverture pourra s'ajouter ici, par exemple :
-            # {"nom": "hero-1-rabot", "debut": 0.0, "fin": 5.0, "fondu": 0.5},
-            # hero-2-aronde : la pièce posée sur les queues, puis l'emboîtement (5,1–5,4 s) et l'assemblage fermé.
-            # Écarté : la main droite qui se lève et se replace (saut à 7 s), puis l'image figée de la fin.
-            {"nom": "hero-2-aronde", "debut": 1.0, "fin": 6.5},
+            # hero-1-plateau (Gemini, coupures à 1,92 s et 8,21 s) : le passage du milieu, la main qui glisse sur
+            # le chant du plateau, sort du cadre, puis le recul. Écartés : le premier plan (0–1,92 s, coin du
+            # plateau, trop court) et le dernier (8,21–10 s, image fixe), puis la fin du recul (6,5–8,2 s), qui va
+            # plus loin que le début du passage de hero-3-buffet : on s'arrête là où les deux cadrages se rejoignent
+            # (6,33 s, similarité 0,87), et un fondu court fait le reste.
+            {"nom": "hero-1-plateau", "debut": 1.96, "fin": 6.45},
             # hero-3-buffet : le recul lent et net jusqu'au buffet entier dans le salon. Écartés : le recul flou
             # (1–3 s), puis le buffet qui change de forme et ses queues d'aronde qui disparaissent (3,0–3,6 s).
-            # Le début ne raccorde donc plus sur l'assemblage : fondu enchaîné.
-            {"nom": "hero-3-buffet", "debut": 3.5, "fin": 8.0, "fondu": 0.6},
+            {"nom": "hero-3-buffet", "debut": 3.5, "fin": 8.0, "fondu": 0.4},
         ],
         "frames": 80,
         "affiche": True,  # la dernière image devient l'affiche (public/hero/fin.webp)
@@ -113,20 +113,24 @@ SEQUENCES = {
             # plan qui disparaît (8,5–9,9 s).
             {"nom": "atelier-1-entree", "debut": 0.0, "fin": 3.8},
             # atelier-2-etabli, générée depuis la dernière image ci-dessus : raccord direct (similarité 0,99).
-            # L'avancée dans l'allée vers l'établi du fond, où travaille l'artisan. Gemini y a fait un fondu
-            # (5,1–5,5 s) vers un gros plan : on s'arrête avant, et l'on finit par un léger zoom avant sur l'établi.
+            # L'avancée dans l'allée vers l'établi du fond, où travaille l'artisan, jusqu'à 5,0 s : Gemini y a fait
+            # ensuite un fondu vers un gros plan avec visage.
+            {"nom": "atelier-2-etabli", "etiquette": "atelier-2-allee", "debut": 0.0, "fin": 5.0},
+            # atelier-2-raccord (Gemini), générée depuis l'image à 5,0 s ci-dessus : raccord direct (0,997).
+            # La suite de l'approche jusqu'à 3,5 s, finie par un léger zoom avant vers l'établi. Écartés : le fondu
+            # de Gemini vers un plan moyen (3,54–3,96 s), puis le visage de l'artisan (3,9–6,2 s).
             {
-                "nom": "atelier-2-etabli",
-                "etiquette": "atelier-2-allee",
-                "debut": 0.0,
-                "fin": 5.0,
-                "zoom": {"depuis": 1.5, "echelle": 1.25, "centre": [0.52, 0.45]},
+                "nom": "atelier-2-raccord",
+                "etiquette": "atelier-2-approche",
+                "debut": 0.04,
+                "fin": 3.5,
+                "zoom": {"depuis": 1.0, "echelle": 1.15, "centre": [0.5, 0.5]},
             },
-            # Le gros plan sur l'établi, sans visage à partir de 7,5 s (écarté : 5,5–7,5 s, visage visible),
-            # jusqu'à la dernière image, identique à atelier-fin.jpeg (0,99). Fondu d'une seconde depuis l'allée.
-            {"nom": "atelier-2-etabli", "etiquette": "atelier-2-gros-plan", "debut": 7.5, "fin": 9.9, "fondu": 1.0},
+            # Le gros plan sur l'établi de la même vidéo, sans visage dès 6,3 s, jusqu'à la dernière image,
+            # identique à atelier-fin.jpeg (0,99). Le cadrage change trop pour un raccord direct : fondu court.
+            {"nom": "atelier-2-raccord", "etiquette": "atelier-2-gros-plan", "debut": 6.3, "fin": 10.0, "fondu": 0.6},
         ],
-        "frames": 80,
+        "frames": 96,
     },
 }
 DESKTOP = (1920, 1080)
