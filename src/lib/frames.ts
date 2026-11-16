@@ -39,10 +39,7 @@ export function createFramePlayer(canvas: HTMLCanvasElement, folder: string, cou
     }
     if (!frame) return;
     const next = frames[index + 1];
-    // Le fondu entre deux images voisines ne joue qu'au milieu de l'intervalle : à l'arrêt, l'image est presque
-    // toujours nette (sans quoi un geste rapide, comme le maillet, apparaîtrait en double).
-    const between = Math.min(1, Math.max(0, (wanted - index - 0.35) / 0.3));
-    const mix = next && source === index ? Math.round(between * 16) / 16 : 0;
+    const mix = next && source === index ? Math.round((wanted - index) * 16) / 16 : 0;
     // Rien à redessiner si rien n'a changé : le scroll rapporte bien plus de positions que d'images.
     const state = `${source}:${mix}:${canvas.width}:${canvas.height}`;
     if (state === shown) return;
@@ -59,9 +56,35 @@ export function createFramePlayer(canvas: HTMLCanvasElement, folder: string, cou
     }
   }
 
+  // Pendant le défilement, les images se fondent l'une dans l'autre : le mouvement reste continu. À l'arrêt,
+  // l'image rejoint en douceur la plus proche (sans quoi un geste rapide, comme le maillet, resterait en double).
+  // Le temps vient de requestAnimationFrame et de performance.now() : il suit l'horloge de la page.
+  const REST = 120; // ms sans nouvelle position : le défilement est arrêté
+  const SETTLE = 220; // ms pour rejoindre l'image la plus proche
+  let lastDraw = 0;
+  let settling = 0;
+  let previous = 0;
+  function settle(time: number) {
+    settling = 0;
+    if (stopped) return;
+    const target = Math.round(wanted);
+    if (time - lastDraw >= REST && wanted !== target) {
+      const step = (Math.max(time - previous, 0) / SETTLE) || 0.08;
+      wanted = Math.abs(target - wanted) <= step ? target : wanted + Math.sign(target - wanted) * step;
+      paint();
+    }
+    previous = time;
+    if (wanted !== Math.round(wanted) || time - lastDraw < REST) settling = requestAnimationFrame(settle);
+  }
+
   function draw(position: number) {
     wanted = position;
+    lastDraw = performance.now();
     paint();
+    if (!settling) {
+      previous = lastDraw;
+      settling = requestAnimationFrame(settle);
+    }
   }
 
   // Inutile de dessiner plus fin que les images : le canvas prend la taille de l'écran, plafonnée à la leur.
@@ -140,6 +163,7 @@ export function createFramePlayer(canvas: HTMLCanvasElement, folder: string, cou
     start,
     destroy() {
       stopped = true;
+      cancelAnimationFrame(settling);
       window.removeEventListener("resize", resize);
     },
   };
